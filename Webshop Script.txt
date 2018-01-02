@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd /etc/nginx/sites-available
+cp default /etc/nginx/sites-available/webshop
+sed -i 's/80/8081/' webshop
+sed -i 's/var\/www\/html/var\/www\/html\/jenkins\/workspace\/Deploy-to-QA\/shop/' webshop
+sed -i 's/=404/ \/index.html?q=$uri\&$args/' webshop
+ln -s /etc/nginx/sites-available/webshop /etc/nginx/sites-enabled
+systemctl restart nginx
+cd /etc/network
+sed -i 's/95/100/' interfaces
+service networking restart
+service networking restart
